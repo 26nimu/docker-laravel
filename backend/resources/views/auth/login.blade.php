@@ -1,7 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
+
+<div class="login">
+	<h1>ログイン</h1>
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+        <!-- メールアドレス入力 -->
+    	<input type="text" class="@error('email') is-invalid @enderror" name="email" placeholder="メールアドレス" value="{{ old('email') }}" required autocomplete="email" autofocus />
+        @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+        <!-- パスワード入力 -->
+        <input type="password"　class="@error('password') is-invalid @enderror" name="password" placeholder="パスワード" required autocomplete="current-password" />
+        @error('password')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+        <!-- ログイン情報送信ボタン -->
+        <button type="submit" class="btn btn-primary btn-block btn-large">ログインする</button>
+        <br>
+        <!-- パスワード再生成へのリンク -->
+        @if (Route::has('password.request'))
+            <a href="{{ route('password.request') }}">
+                <button type="submit" class="btn btn-block btn-large pr">パスワードを忘れた場合</button>
+            </a>
+        @endif
+    </form>
+</div>
+@endsection
+
+
+
+<!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -69,5 +104,4 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
+</div> -->
